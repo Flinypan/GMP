@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Navegación Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+
+    .container {
+        width: 1500px;
+        height: 1350px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .title {
+        background-color: #fff2cc;
+        border: 2px solid #d6b656;
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 30px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .scene-box {
+        background-color: #dae8fc;
+        border: 2px solid #6c8ebf;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 20px 0;
+        position: absolute;
+        width: 300px;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    
+    .option-box {
+        background-color: #fff2cc;
+        border: 2px solid #d6b656;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        position: absolute;
+        width: 200px;
+        font-size: 11px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .option-box:hover {
+        background-color: #ffe066;
+        transform: scale(1.02);
+    }
+    
+    .final-box {
+        background-color: #e1d5e7;
+        border: 2px solid #9673a6;
+        border-radius: 8px;
+        padding: 12px;
+        position: absolute;
+        width: 160px;
+        font-size: 11px;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .scene-content {
+        background-color: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 10px;
+        border-left: 4px solid #6c8ebf;
+    }
+    
+    .connector {
+        position: absolute;
+        background-color: #666;
+        z-index: -1;
+    }
+    
+    .connector-h {
+        height: 2px;
+    }
+    
+    .connector-v {
+        width: 2px;
+    }
+    
+    /* Posicionamiento de elementos */
+    .scene-1 { top: 140px; left: 550px; }
+    
+    .option-1a { top: 350px; left: 180px; }
+    .option-1b { top: 350px; left: 1020px; }
+    
+    .scene-2a { top: 550px; left: 30px; }
+    .scene-2b { top: 550px; left: 1070px; }
+    
+    .option-2a1 { top: 780px; left: 30px; }
+    .option-2a2 { top: 780px; left: 330px; }
+    .option-2b1 { top: 780px; left: 1020px; }
+    .option-2b2 { top: 780px; left: 1280px; }
+    
+    .scene-3a { top: 980px; left: 0px; }
+    .scene-3b { top: 980px; left: 350px; }
+    .scene-3c { top: 980px; left: 970px; }
+    .scene-3d { top: 980px; left: 1300px; }
+    
+    .final-1 { top: 1220px; left: 70px; }
+    .final-2 { top: 1220px; left: 400px; }
+    .final-3 { top: 1220px; left: 1020px; }
+    .final-4 { top: 1220px; left: 1360px; }
+    
+    /* Conectores */
+    /* Del título a la escena 1 */
+    .conn-title { top: 105px; left: 699px; height: 35px; }
+    
+    /* De escena 1 a opciones */
+    .conn-scene1-left { top: 315px; left: 650px; height: 35px; }
+    .conn-scene1-right { top: 315px; left: 750px; height: 35px; }
+    .conn-left-branch { top: 350px; left: 280px; height: 200px; }
+    .conn-right-branch { top: 350px; left: 1120px; height: 200px; }
+    
+    /* De opciones a escenas 2 */
+    .conn-opt1a-scene2a { top: 390px; left: 280px; height: 160px; }
+    .conn-opt1b-scene2b { top: 390px; left: 1120px; height: 160px; }
+    
+    /* De escenas 2 a opciones finales */
+    .conn-scene2a-opt1 { top: 730px; left: 130px; height: 50px; }
+    .conn-scene2a-opt2 { top: 730px; left: 430px; height: 50px; }
+    .conn-scene2b-opt1 { top: 730px; left: 1120px; height: 50px; }
+    .conn-scene2b-opt2 { top: 730px; left: 1380px; height: 50px; }
+    
+    /* De opciones finales a escenas finales */
+    .conn-opt2a1-scene3a { top: 820px; left: 130px; height: 160px; }
+    .conn-opt2a2-scene3b { top: 820px; left: 430px; height: 160px; }
+    .conn-opt2b1-scene3c { top: 820px; left: 1120px; height: 160px; }
+    .conn-opt2b2-scene3d { top: 820px; left: 1380px; height: 160px; }
+    
+    /* De escenas finales a finales */
+    .conn-scene3a-final1 { top: 1200px; left: 150px; height: 20px; }
+    .conn-scene3b-final2 { top: 1200px; left: 500px; height: 20px; }
+    .conn-scene3c-final3 { top: 1200px; left: 1120px; height: 20px; }
+    .conn-scene3d-final4 { top: 1200px; left: 1450px; height: 20px; }
+</style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            Mapa Navegación Chatbot: Entre Gotas y Estilo, La Sombrilla de los Huecos
+        </div>
+
+
+    <!-- Conectores -->
+    <!-- Del título a la escena 1 -->
+    <div class="connector connector-v conn-title"></div>
+    
+    <!-- De escena 1 a opciones (ramas diagonales) -->
+    <div class="connector connector-v conn-scene1-left"></div>
+    <div class="connector connector-v conn-scene1-right"></div>
+    <div class="connector connector-v conn-left-branch"></div>
+    <div class="connector connector-v conn-right-branch"></div>
+    
+    <!-- De opciones a escenas 2 -->
+    <div class="connector connector-v conn-opt1a-scene2a"></div>
+    <div class="connector connector-v conn-opt1b-scene2b"></div>
+    
+    <!-- De escenas 2 a opciones finales -->
+    <div class="connector connector-v conn-scene2a-opt1"></div>
+    <div class="connector connector-v conn-scene2a-opt2"></div>
+    <div class="connector connector-v conn-scene2b-opt1"></div>
+    <div class="connector connector-v conn-scene2b-opt2"></div>
+    
+    <!-- De opciones finales a escenas finales -->
+    <div class="connector connector-v conn-opt2a1-scene3a"></div>
+    <div class="connector connector-v conn-opt2a2-scene3b"></div>
+    <div class="connector connector-v conn-opt2b1-scene3c"></div>
+    <div class="connector connector-v conn-opt2b2-scene3d"></div>
+    
+    <!-- De escenas finales a finales -->
+    <div class="connector connector-v conn-scene3a-final1"></div>
+    <div class="connector connector-v conn-scene3b-final2"></div>
+    <div class="connector connector-v conn-scene3c-final3"></div>
+    <div class="connector connector-v conn-scene3d-final4"></div>
+    
+    <!-- Escena inicial -->
+    <div class="scene-box scene-1">
+        <div class="scene-content">
+            Vas caminando bajo una fuerte lluvia cuando ves a un vendedor con una sombrilla muy extraña. A simple vista parece elegante, con colores modernos, pero al fijarte bien notas que tiene varios huecos en la tela. El vendedor asegura que es "la nueva moda y también muy útil". ¿Qué decides hacer?
+        </div>
+    </div>
+    
+    <!-- Opciones primera decisión -->
+    <div class="option-box option-1a">
+        Comprar la sombrilla para comprobarlo tú mismo.
+    </div>
+    
+    <div class="option-box option-1b">
+        Reírte y preguntarle cómo puede ser útil una sombrilla con huecos.
+    </div>
+    
+    <!-- Escenas segunda ronda -->
+    <div class="scene-box scene-2a">
+        <div class="scene-content">
+            Caminas bajo la lluvia con la sombrilla. El agua entra por los huecos, pero curiosamente, se canaliza hacia compartimentos que puedes usar para regar plantas o incluso para refrescarte. Varias personas te miran intrigadas. ¿Qué haces?
+        </div>
+    </div>
+    
+    <div class="scene-box scene-2b">
+        <div class="scene-content">
+            El vendedor sonríe y te explica que los huecos no son un error: están diseñados para ventilación, ligereza y estilo, además de recoger agua en compartimentos ocultos. Es un invento "funcional y fashion". ¿Qué decides?
+        </div>
+    </div>
+    
+    <!-- Opciones segunda decisión -->
+    <div class="option-box option-2a1">
+        Mostrar orgulloso tu sombrilla innovadora.
+    </div>
+    
+    <div class="option-box option-2a2">
+        Guardarla y arrepentirte de tu compra.
+    </div>
+    
+    <div class="option-box option-2b1">
+        Probarla para comprobar si es verdad.
+    </div>
+    
+    <div class="option-box option-2b2">
+        Rechazarla y seguir tu camino.
+    </div>
+    
+    <!-- Escenas finales -->
+    <div class="scene-box scene-3a">
+        <div class="scene-content">
+            La gente comienza a tomarte fotos. Un influencer comenta que tu sombrilla con huecos es el accesorio del año. En redes sociales se vuelve viral: "la sombrilla que deja pasar el agua, pero marca tendencia".
+        </div>
+    </div>
+    
+    <div class="scene-box scene-3b">
+        <div class="scene-content">
+            Te refugias en un café, empapado y molesto. Más tarde ves en las noticias que la sombrilla se convirtió en un invento exitoso. Tú solo piensas: "pude haber sido parte de eso".
+        </div>
+    </div>
+    
+    <div class="scene-box scene-3c">
+        <div class="scene-content">
+            Descubres que los huecos recogen agua en un pequeño filtro que convierte el líquido en potable. Además, la sombrilla es ligera y fresca en los días soleados. No solo es moda, ¡también es muy útil!
+        </div>
+    </div>
+    
+    <div class="scene-box scene-3d">
+        <div class="scene-content">
+            Sigues tu camino bajo la lluvia con tu vieja sombrilla. Ves a un grupo usando las sombrillas con huecos como accesorios de pasarela. Aunque sonríes incrédulo, sabes que algo grande está naciendo.
+        </div>
+    </div>
+    
+    <!-- Finales -->
+    <div class="final-box final-1">
+        Final de Moda.
+    </div>
+    
+    <div class="final-box final-2">
+        Final Perdido.
+    </div>
+    
+    <div class="final-box final-3">
+        Final Útil.
+    </div>
+    
+    <div class="final-box final-4">
+        Final Observador.
+    </div>
+</div>
+
+
+</body>
+</html>
